@@ -41,9 +41,19 @@ namespace Api
         }
 
         private void RegisterDependencies(IServiceCollection services)
+        {   
+            RegisterRepositories(services);
+            RegisterServices(services);
+        }
+
+        protected virtual void RegisterServices(IServiceCollection services)
+        {
+            services.AddSingleton<ICustomerService, CustomerService>();
+        }
+
+        protected virtual void RegisterRepositories(IServiceCollection services)
         {
             services.AddSingleton<ICustomerRepository, CustomerRepository>();
-            services.AddSingleton<ICustomerService, CustomerService>();
         }
     }
 }

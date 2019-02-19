@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using Api.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -28,5 +29,26 @@ namespace Api.Controllers
 
             return Ok(customers);
         }
+
+        [HttpPost]
+        public async Task<IActionResult> Post(CreateCustomerDto customer)
+        {
+            //
+            // TODO: Perform validation
+            //
+            var status = await _customerService.CreateCustomerAsync(customer);
+            if (status)
+            {
+                return Ok();
+            }
+
+            return StatusCode((int) (HttpStatusCode.InternalServerError));
+        }
+    }
+
+    public class CreateCustomerDto
+    {
+        public string Name { get; set; }
+        public string Address { get; set; }
     }
 }
